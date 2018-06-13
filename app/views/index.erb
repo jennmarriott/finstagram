@@ -1,43 +1,30 @@
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="../../public/stylesheets/normalize.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,700italic,700,300">
-        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-        <link rel="stylesheet" href="../../public/stylesheets/lib.css">
-        <link rel="stylesheet" href="../../public/stylesheets/app.css">
-        <title>Finstragram</title>
-    </head>
-    <body>
-        <header>
-            <h1>Finstagram</h1>
-        </header>
-        <main role="main">
-            <% @finstagram_posts.each do |finstagram_post| %>
-             <article class="finstagram-post">
-                <div class="user-info">
-                    <img src="<%= finstagram_post[:avatar_url] %>" alt="<%= finstagram_post[:username] %>">
-                    <h2><%= finstagram_post[:username] %></h2>
-                    <h3><%= finstagram_post[:humanized_time_ago] %></h3>
-                </div>
-                <a class="photo" href="#">
-                    <img src="<%= finstagram_post[:photo_url] %>" alt="finstagram post from <%= finstagram_post[:username] %>">
-                </a>
-                <div class="actions">
-                    <%= finstagram_post[:like_count] %> likes
-                    <span class="comment-count"><%= finstagram_post[:comment_count] %> comment</span>
-                </div>
-                <ul class="comments">
-                    <% finstagram_post[:comments].each do |comment| %>
-                        <li>
-                            <p>
-                                <%= finstagram_post[:comments][0][:username] %>: <%= finstagram_post[:comments][0][:text] %>
-                            </p>
-                        </li>
-                    <% end%>
-                </ul>
-            </article>
-            <% end %>
-        </main>
-            
-           
+<header>
+    <h1>Finstagram</h1>
+</header>
+<main role="main">
+    <% @finstagram_posts.each do |finstagram_post| %>
+        <article class="finstagram_posts">
+            <div class="user-info">
+                <img src="<%= finstagram_post.user.avatar_url %>" alt="<%= finstagram_post.user.username %>">
+                <h2><%= finstagram_post.user.username %></h2>
+                <h3><%= finstagram_post.humanized_time_ago %></h3>
+            </div>
+            <a class="photo" href="#">
+                <img src="<%= finstagram_post.photo_url %>" alt="finstagram post from <%= finstagram_post.user.username %>">
+            </a>
+            <div class="actions">
+                <%= finstagram_post.like_count %> likes
+                <span class="comment-count"><%= finstagram_post.comment_count %> comments</span>
+            </div>
+            <ul class="comments">
+                <% finstagram_post.comments.each do |comment| %>
+                    <li>
+                        <p>
+                            <%=comment.user.username %>: <%= comment.text %>
+                        </p>
+                    </li>
+                <% end%>
+            </ul>
+        </article>
+    <% end %>
+</main>
