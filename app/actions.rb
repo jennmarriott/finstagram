@@ -54,3 +54,25 @@ post '/signup' do
         erb(:signup)
     end
 end
+get '/posts/new' do
+    @post = FinstagramPost.new
+    erb(:"posts/new")
+end
+post '/posts' do
+    photo_url = params[:photo_url]
+    
+    # instantiate new Post
+    @post = FinstagramPost.new({ photo_url: photo_url, user_id: current_user
+     })
+    
+    # if @post validates, save
+    if @post.save
+        redirect(to('/'))
+    else
+        erb(:"posts/new")
+    end
+end
+get '/posts/:id' do
+    @post = FinstagramPost.find(params[:id])
+    erb(:"posts/show")
+end
